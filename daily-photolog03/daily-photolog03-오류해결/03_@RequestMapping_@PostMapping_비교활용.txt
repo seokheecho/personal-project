@@ -100,3 +100,26 @@ $('#addBtn').click(() => {
         return result;
     }
 
+
+
+**참고사항
+@RequestBody에 내가 만든 객체를 parameter로 받는 상황이었다. Ex. @RequestBody Board board
+
+ajax (post method)에서 data가 계속 이상한 값으로 서버에 전달되었다.-> 415 error code 발생!!
+나와같은삽질 : http://babolsk.tistory.com/1067
+
+contentType : "application/json; charset=UTF-8",
+써주지 않았더니 한글 데이터가 비정상적으로 서버에 넘어갔고, 415에러를 만나게된다.
+
+JSON.stringify()
+data를 json타입으로 그냥 넘긴 것이 잘못이었다. 참조 url : http://www.json.org/json-ko.html https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+
+json(javascript object notation): data교환형식
+
+JSON.parse() 인자로 전달된 문사열을 자바스크립트의 Object로 변환한다.
+
+JSON.stringify() 인자로 전달된 자바스크립트의 Object를 Json형태의 문자열로 변환한다.
+
+ @RequestBody 하는 일
+@RequestBody 어노테이션은 POST 방식으로 전송된 HTTP 요청 데이터를 String 타입의 body 파라미터로 전달된다.
+(수신) 그리고 @ResponseBody 어노테이션이 @RequestMapping 메서드에서 적용되면 해당 메서드의 리턴 값을 HTTP 응답 데이터로 사용한다.
