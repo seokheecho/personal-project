@@ -1,0 +1,14 @@
+[MemberDAO.java - memberMapper.xml]
+ - 함수명 불일치!
+   <insert id="insert"  parameterType="map"> => <insert id="insertMemInfo"  parameterType="map">
+
+[[MyBatis] Invalid bound statement (not found): 에러]
+http://blog.woniper.net/247
+
+[MemberVO.java - password 오타!]
+- MemberVO 변수명 오타 ... passwodr -> password 변경!
+
+org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'password' in 'class com.hee.daily_photolog.vo.MemberVO'
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:75)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371)
+	at com.sun.proxy.$Proxy16.insert(Unknown Source)

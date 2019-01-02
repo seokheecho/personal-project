@@ -1,0 +1,102 @@
+[@RequestMapping - @PostMapping 비교활용]
+ - Controller에서 값이 null로 들어간 상황 (email=null, name=null, password=null)
+   @RequestMapping 과 @PostMapping 차이 재확인!
+   @RequestBody - @ResponseBody
+ - 아래 오류 사항 해결!
+
+정보: Loading XML bean definitions from class path resource [org/springframework/jdbc/support/sql-error-codes.xml]
+1월 02, 2019 11:37:21 오전 org.springframework.jdbc.support.SQLErrorCodesFactory <init>
+정보: SQLErrorCodes loaded: [DB2, Derby, H2, HDB, HSQL, Informix, MS-SQL, MySQL, Oracle, PostgreSQL, Sybase]
+org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'EMAIL' cannot be null
+### The error may involve com.hee.daily_photolog.dao.MemberDAO.insertMemInfo-Inline
+### The error occurred while setting parameters
+### SQL: insert into tbl_memb(EMAIL,NAME,PWD)      values(?,?,password(?))
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'EMAIL' cannot be null
+; SQL []; Column 'EMAIL' cannot be null; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Column 'EMAIL' cannot be null
+	at org.springframework.jdbc.support.SQLExceptionSubclassTranslator.doTranslate(SQLExceptionSubclassTranslator.java:85)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:82)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371)
+	at com.sun.proxy.$Proxy16.insert(Unknown Source)
+
+
+[@RequestMapping(value="/signUp", method = RequestMethod.POST) - @PostMapping - @RequestBody - @ResponseBody]
+ - Controller 에서 @RequestMapping 사용할 때와 @PostMapping 할 때 차이!
+ - .js 에서  $.ajax() 사용할 때와 $.post() 사용할 때 차이!
+
+[@PostMapping]
+1. signUp.js
+//**참고 : 회원정보 등록(bitcamp-assignment-04)
+$('#addBtn').click(() => {
+ $.post(`${serverApiAddr}/json/member/signUp`, {
+     'email': $('#fEmail').val(),
+     'name': $('#fName').val(),
+     'password': $('#fPassword').val()
+ }, (result) => {
+     console.log(result);
+ }, 'json')
+ .fail(() => {
+     alert('회원 가입 중에 오류 발생!')
+ });
+});
+
+2. MemberController.java
+  @PostMapping("signUp")
+  public Object signUp(MemberVO vo) {
+      HashMap<String,Object> result = new HashMap<>();
+      try {
+          memberService.insertMemInfo(vo);
+          result.put("status", "success");
+      } catch (Exception e) {
+          result.put("status", "fail");
+          result.put("message", e.getMessage());
+      } 
+      return result;
+  }
+
+[@RequestMapping]
+1. signUp.js
+$('#addBtn').click(() => {
+        var formData = new Object();
+         formData.email = $('#fEmail').val();
+         formData.name = $('#fName').val();
+         formData.password = $('#fPassword').val();
+         console.log(formData);
+            $.ajax({
+                type : "post"
+                ,contentType : "application/json;charset=UTF-8"    // contentType 필수! -----> ★
+                ,url : `${serverApiAddr}/json/member/signUp`
+                ,data : JSON.stringify(formData)
+                ,success : function(data){
+                var result = data.result;
+                console.log(data);
+                console.log("result=",result);
+                if(result != "0"){
+                    alert('정상적으로 처리되었습니다.');
+                    window.opener.location.reload();
+                    window.close();
+                    }else{
+                        alert('정상적으로 처리되지 않았습니다');
+                    }
+                }  
+            });     
+});
+
+2. MemberController.java 
+    // 회원정보 등록
+    @RequestMapping(value="/signUp", method = RequestMethod.POST)
+    public @ResponseBody Object signUp(@RequestBody MemberVO vo) {
+        HashMap<String,Object> result = new HashMap<>();
+        try {
+            memberService.insertMemInfo(vo);
+            System.out.println(vo);
+            result.put("status", "success");
+        } catch (Exception e) {
+            result.put("status", "fail");
+            result.put("message", e.getMessage());
+        }
+        return result;
+    }
+
