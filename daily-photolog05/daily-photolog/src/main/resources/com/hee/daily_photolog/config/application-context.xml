@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+        
+
+  <context:component-scan base-package="com.hee.daily_photolog">
+    <context:exclude-filter type="regex" 
+                            expression="com.hee.daily_photolog.web.*"/>
+  </context:component-scan>
+
+  <!-- 트랜잭션 관련 애노테이션을 처리할 객체들을 등록한다. -->
+  <tx:annotation-driven transaction-manager="txManager"/>
+
+  <!-- 애노테이션이 아닌 AOP를 이용하여 트랜잭션을 관리할 수 있다. -->
+  <!-- 메서드 별로 트랜잭션을 어떻게 적용할 지, 즉 트랜잭션 정책을 설정한다. -->
+  <tx:advice id="txAdvice" transaction-manager="txManager">
+    <tx:attributes>
+       <tx:method name="get*" read-only="true"/>
+       <tx:method name="list*" read-only="true"/>
+       <tx:method name="find*" read-only="true"/>
+       <tx:method name="*"/>
+    </tx:attributes>
+  </tx:advice>
+  
+    <!-- 트랜잭션을 적용할 대상을 설정한다. -->
+  <aop:config>
+      <!-- 트랜잭션을 적용할 대상의 규칙을 선언 -->
+      <aop:pointcut id="serviceOperation" 
+        expression="execution(* com.hee.daily_photolog.service.*.*(..))"/>
+      
+      <!-- 대상에 대해 어떤 트랜잭션을 적용할 지 설정한다. -->
+      <aop:advisor advice-ref="txAdvice" 
+        pointcut-ref="serviceOperation"/>
+  </aop:config>
+
+  <!-- 공장에서 SqlSessionFactory 만들기 
+       => 실행 원리!
+          - class 속성에 지정된 클래스가 FactoryBean 구현체라면,
+          - 그 객체를 만들어 저장하는 것이 아니라
+          - 그 객체의 getObject()를 호출하면 그 리턴 값을 저장한다. 
+  -->
+  
+  <bean id="sqlSessionFactory"
+        class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="mapperLocations"
+              value="classpath*:com/hee/daily_photolog/mapper/**/*.xml" />
+    <property name="typeAliasesPackage"
+              value="com.hee.daily_photolog.vo"/>
+  </bean>
+
+  <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${jdbc.driver}" />
+    <property name="url" value="${jdbc.url}" />
+    <property name="username" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+  </bean>
+
+  <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
+  
+  <!-- DAO 인터페이스로부터 구현체를 자동 생성하는 객체 등록 
+       => DAO 구현체가 사용할 SQL 맵퍼 파일은 namespace 값으로 찾는다
+       => 따라서 인터페이스 명과 SQL 맵퍼의 namespace 값은 같아야 한다.
+       => 또한 인터페이스의 메서드명과 SQL id는 같아야 한다.  
+       => DAO=Repository
+  -->
+  
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" 
+              value="com/hee/daily_photolog.dao" />
+  </bean>
+  
+  <!-- .properties 파일을 읽어서 그 데이터를 보관할 객체를 등록한다. -->
+  <context:property-placeholder 
+      location="classpath:com/hee/daily_photolog/config/jdbc.properties"/>
+
+  
+    <!-- 멀티파트 요청 파라미터 값을  처리할 객체를 등록해야만 파일 업로드를 수행할 수 있다.
+                    (**멀티파트 요청 데이터를 처리해주는 객체 등록)
+                 => 이 객체를 등록하지 않으면, multipart/form-data 로 인코딩되어 넘어온 
+                      요청 데이터를 처리하지 못한다.
+       => CommonsMultipartResolver 객체는 Apache의 commons-fileupload 
+          라이브러리를 사용하기 때문에 반드시 해당 라이브러리를 추가해야 한다.
+       => Servlet 3.0에 추가된 API를 사용한다면 CommonsMultipartResolver를
+          따로 추가할 필요가 없다. 물론 commons-fileupload 라이브러리도 필요 없다.
+          단, web.xml의 프론트 컨트롤러에 <multipart-config> 설정을 추가해야 한다.
+    -->
+    <!--  
+    <bean id="multipartResolver" 
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+          <property name="maxUploadSize" value="3000000"/>
+          <property name="maxInMemorySize" value="1000000"/>
+    </bean>
+    -->
+
+</beans>
+
+
+
+
+
+
+
