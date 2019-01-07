@@ -1,4 +1,4 @@
-# daily-photolog05
+# daily-photolog05_step01
  - daily-photolog05 포토로그(PhotoLog)
  - insert 포토로그(파일저장 제외)
  
