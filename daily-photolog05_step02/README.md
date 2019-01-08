@@ -15,7 +15,7 @@
  - form.html - form.js 
 
 **form.html 
-script 태그 위치 주의!
+- script 태그 위치 주의!
 - 참고 : HTML에서 script태그는 어디에 위치해야 할까?
 (https://junhobaik.github.io/js-script-position/)
 
