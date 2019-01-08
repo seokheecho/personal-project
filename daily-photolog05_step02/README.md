@@ -18,7 +18,7 @@
 <script> 위치 주의!
 - 참고 : HTML에서 script태그는 어디에 위치해야 할까?
 (https://junhobaik.github.io/js-script-position/)
-        
+~~~html
 <!--  photo -->
 <script src="../node_modules/jquery/dist/jquery.js"></script>
 <script src="../node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
@@ -40,3 +40,4 @@
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
 <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+~~~~
