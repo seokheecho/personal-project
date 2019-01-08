@@ -15,11 +15,11 @@
  - form.html - form.js 
 
 **form.html 
-<script> 위치 주의!
+script 태그 위치 주의!
 - 참고 : HTML에서 script태그는 어디에 위치해야 할까?
 (https://junhobaik.github.io/js-script-position/)
 
-~~~javascript
+~~~html
 <script src="../node_modules/jquery/dist/jquery.js"></script>
 <script src="../node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
 <script src="../node_modules/blueimp-load-image/js/load-image.all.min.js"></script>
