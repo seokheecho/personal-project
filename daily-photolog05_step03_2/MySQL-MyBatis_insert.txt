@@ -1,0 +1,9 @@
+**[MySQL] auto_increment 확인 및 초기화
+http://blog.naver.com/PostView.nhn?blogId=hanajava&logNo=220554545738&parentCategoryNo=&categoryNo=&viewDate=&isShowPopularPosts=false&from=postView
+
+**[mybatis] insert 후 key값 반환
+http://blog.woniper.net/192
+
+**[MyBatis]
+http://www.devkuma.com/books/pages/756
+http://www.mybatis.org/mybatis-3/ko/sqlmap-xml.html
