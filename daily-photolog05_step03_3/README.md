@@ -5,6 +5,7 @@
  - 기존 vo - study를 위한 project로 명확히 표기 memberVO, photoLogVO
  - daily-photolog05_step03_1, _2, _3 정리!
  - Test01, Test02, Final 나눠서 진행(코딩 할 때 단일 테스트 하면서 진행하는게 최종적으로 더 빠르다!)
+   PhotoLogController.java
         Test01 - DB(tbl_photofile)에 value 직접 넣기
         Test02 - DB(tbl_photofile)에 value 직접 넣기 - for문 활용
         Final - DB(tbl_photofile)에 value 넣기 - 1) file명 Random으로 변경

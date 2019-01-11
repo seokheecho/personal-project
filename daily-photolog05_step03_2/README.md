@@ -35,6 +35,17 @@ photoFileVO.setPhotoLogNo(vo.getNo());
  **step03_2 에서 primary key(PFNO) 값이 자동으로 증가되지 않는 부분을 재확인했다.
  - DB(MySQL)에서 auto_increment 설정이 null로 잡혀있었다. auto_increment 설정은 'auto_increment.md' 파일 참고!
  - PhotoLogController 에서 처리된 PLNO(foregin key) 값을 tbl_photofile 에 넣어줘야한다.
+
+ - 1) cmd에서 MySQL 접속 후 직접 들어가는지 확인
+     insert into tbl_photofile(PFNO,PLNO,PHOTO) values (2,59,'test')
+   2) photoFileMapper.xml - mapper에서 직접 들어가는지 확인
+ ~~~xml
+  <insert id="insertPhotoFile"
+          parameterType="map">
+    insert into tbl_photofile(PFNO,PLNO,PHOTO)
+    values (2,59,'test')
+  </insert>
+ ~~~
  
 ### 참고
 **[MySQL] auto_increment 확인 및 초기화
