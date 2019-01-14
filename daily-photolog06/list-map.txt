@@ -1,0 +1,8 @@
+﻿Map<String, Object> listPhotoLog(int memberNo)
+======>PhotoLogControllerList
+{result=success, photologlist=[PhotoLogVO [no=3, memberNo=2, date=2019-01-08, title=null, memo=null], PhotoLogVO [no=7, memberNo=2, date=2019-01-08, title=null, memo=null], PhotoLogVO [no=17, memberNo=2, date=2019-01-09, title=null, memo=null], PhotoLogVO [no=18, memberNo=2, date=2019-01-09, title=null, memo=null], PhotoLogVO [no=19, memberNo=2, date=2019-01-09, title=null, memo=null], PhotoLogVO [no=99, memberNo=2, date=2019-01-14, title=null, memo=null]]}
+
+
+List<PhotoLogVO> listPhotoLog(int no)
+===>>>photologControllerlist
+[PhotoLogVO [no=3, memberNo=2, date=2019-01-08, title=null, memo=null], PhotoLogVO [no=7, memberNo=2, date=2019-01-08, title=null, memo=null], PhotoLogVO [no=17, memberNo=2, date=2019-01-09, title=null, memo=null], PhotoLogVO [no=18, memberNo=2, date=2019-01-09, title=null, memo=null], PhotoLogVO [no=19, memberNo=2, date=2019-01-09, title=null, memo=null], PhotoLogVO [no=99, memberNo=2, date=2019-01-14, title=null, memo=null]]
