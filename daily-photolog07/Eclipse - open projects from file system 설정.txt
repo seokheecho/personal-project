@@ -1,5 +1,23 @@
 ﻿[Eclipse - open projects from file system 설정]
  => 기존 project open 시 eclipse project 설정 및 Maven > Update Project 시 Maven lib 빠지는 현상 해결
+**최초 Project open 시 실행순서
+1) Maven > Update Project
+2) Project - Refresh
+3) Project-properties - Java Compiler
+4) Project-properties
+- Project Facets
+- Deployment Assembly
+
+Java Compiler
+> Compiler compliacne level : 1.8 (해당project jdk version에 맞춰 변경)
+> 'Java Build Path' 클릭 - JRE System Library [JavaSE-1.8] 클릭 - Edit
+- Alternate JRE  - Installed JREs 클릭 - 해당project jdk version에 맞춰 변경 - Apply - Finish - Apply
+- Workspace default JRE (jdk_1.0.8_131) 클릭 - Finish - Apply
+**Workspace default JRE
+=> Window - Preferences - Java - Installed JREs - Add - ...
+(여러가지의 JDK version을 이곳에서 설정할 수 있다. 
+물론 version별 JDK가 설치 되어있어야한다. 
+설치된 JDK 경로를 잡아주는 것이라 생각하면 된다.)
 
 Maven > Update Project 
 Project-properties(해당 프로젝트 마우스 우클릭-properties)
