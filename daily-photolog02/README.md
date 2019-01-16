@@ -4,9 +4,11 @@
 
 1) pom.xml
 
-2) application-context.xml
+2) web.xml
+
+3) application-context.xml
    app-servlet.xml
    json-servlet.xml
 
-3) 프로젝트 폴더 구성
+4) 프로젝트 폴더 구성
  
