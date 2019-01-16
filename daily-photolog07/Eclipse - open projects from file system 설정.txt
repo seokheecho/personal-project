@@ -1,0 +1,24 @@
+﻿[Eclipse - open projects from file system 설정]
+ => 기존 project open 시 eclipse project 설정 및 Maven > Update Project 시 Maven lib 빠지는 현상 해결
+
+Maven > Update Project 
+Project-properties(해당 프로젝트 마우스 우클릭-properties)
+ - Project Facets 
+"Dynamic Web Module - 2.5 / Java - 1.8 / JavaScript - 1.0" - Apply
+
+ - Deployment Assembly
+Add - Java Build Path Entires 선택 - Next - Maven Depndencies 선택 - Finish - Apply
+
+**Deployment Assembly
+Source - Deploy Path
+/src/main/java - WEB-INF/classes
+/src/main/resources - WEB-INF/classes
+/src/main/webapp - /
+/target/classes - /                     
+Maven Depndencies - WEB-INF/lib
+
+[Eclipse - Deployment Assembly]
+**참고
+ - https://lng1982.tistory.com/115
+ - https://lng1982.tistory.com/205
+ - https://stackoverflow.com/questions/35525117/what-is-target-m2e-wtp-web-resources-in-deployment-assembly
