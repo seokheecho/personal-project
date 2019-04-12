@@ -1,0 +1,29 @@
+**AUTO_INCREMENT 값을 초기화 후, 테이블 안의 모든 데이터의 ID값을 재조정하는 방법
+- 위 쿼리문은 현재 모든 데이터 ID값을 1부터 재조정하고,
+다음 인덱스 값을 [마지막 행번호 + 1] 로 정하는 명령어입니다.
+
+ALTER TABLE [테이블명] AUTO_INCREMENT=1;
+SET @COUNT = 0;
+UPDATE [테이블명] SET [AUTO_INCREMENT 열 이름] = @COUNT:=@COUNT+1;
+
+- 예를 들면, 테이블 `tbl_memb` 의 AUTO_INCREMENT 값을 초기화 후, 모든 데이터의 인덱스를 1부터 조정하려면, 다음과 같습니다.
+
+ex)
+ALTER TABLE tbl_memb AUTO_INCREMENT=1;
+SET @COUNT = 0;
+UPDATE tbl_memb SET mno = @COUNT:=@COUNT+1;
+
+ex)
+alter table tbl_memb auto_increment = 16;
+
+======
+mySQL에서 PRIMARY KEY 에 AUTO_INCREMENT 속성을 주어서 키값을 자동으로 증가시킬 수 있습니다. 
+
+행의 값을 UNIQUE 하게 만들기 위한 것인데요,
+이전 데이터가 삭제 된다고 해도 한 번 증가된 값은 다시 조정되지 않습니다. 
+예를 들어, 100개의 데이터를 넣은 다음, 1개 데이터를 삭제한 후, 다시 넣어보면 인덱스 값은 101이 됩니다.
+이 AUTO_INCREMENT 값을 초기화 하려면, 아래와 같은 쿼리를 실행시켜주면 됩니다. 
+
+ALTER TABLE [TABLE명] AUTO_INCREMENT = [시작할 값]; 
+
+물론 이 경우에는, 테이블에 새로 시작할 값보다 높은 값이 있으면 안됩니다. 
